@@ -22,6 +22,7 @@ public class Exams {
 
     private Integer Id;
     private String examName;
+    private Integer quantity;
     private Integer price;
 
 }

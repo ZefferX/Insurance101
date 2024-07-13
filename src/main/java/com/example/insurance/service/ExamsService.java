@@ -18,6 +18,7 @@ public class ExamsService {
         Exams newExams = new Exams();
         newExams.setExamName(request.name());
         newExams.setPrice(request.price());
+        newExams.setQuantity(request.quantity());
         examsRepository.save(newExams);
     }
 
@@ -40,6 +41,7 @@ public class ExamsService {
         Exams exams = examsRepository.findById(id).get();
         exams.setExamName(request.name());
         exams.setPrice(request.price());
+        exams.setQuantity(request.quantity());
         return examsRepository.save(exams);
 
     }

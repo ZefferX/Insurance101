@@ -20,6 +20,7 @@ public class MedicineService {
         Medicine newMedicine = new Medicine();
         newMedicine.setMedicineName(request.medicineName());
         newMedicine.setPrice(request.medicinePrice());
+        newMedicine.setQuantity(request.quantity());
         medicineRepository.save(newMedicine);
     }
 
@@ -36,6 +37,7 @@ public class MedicineService {
         Medicine medicine = updateMedicine.get();
         medicine.setMedicineName(request.medicineName());
         medicine.setPrice(request.medicinePrice());
+        medicine.setQuantity(request.quantity());
         return medicineRepository.save(medicine);
     }
 
