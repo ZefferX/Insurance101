@@ -1,10 +1,7 @@
 package com.example.insurance.useCases;
 
 import com.example.insurance.dto.NewPurchaseRequest;
-import com.example.insurance.model.Insurance;
-import com.example.insurance.model.Medicine;
-import com.example.insurance.model.MedicineTicket;
-import com.example.insurance.model.Patient;
+import com.example.insurance.model.*;
 import com.example.insurance.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -73,7 +70,45 @@ public class PurchaseService {
             medicineService.updateMedicineToInternalUse(medicine);
             medicineTicketService.createNewMedicineTicket(ticket);
 
+        }else if (request.productType().equalsIgnoreCase("exam")){
+            Exams exams = examsService.findExamById(request.productId());
+            boolean isQuantityRequiredBiggerThanAvailable = exams.getQuantity() < request.quantity();
+            if (isQuantityRequiredBiggerThanAvailable && !request.isFlexibleClient())
+                throw new RuntimeException("Quantity required not met");
+
+            if (isQuantityRequiredBiggerThanAvailable && request.isFlexibleClient()) {
+                quantityToBuy = exams.getQuantity();
+            }
+            double totalToPay = exams.getPrice() * request.quantity();
+            if (totalToPay > patient.getInsuranceAmount()) {
+                throw new RuntimeException("Insufficient insurance amount to pay");
+            }
+
+            double insuranceDiscount = ((double) insurance.getMedicinesDiscount() / 100) * totalToPay;
+            totalToPay = totalToPay - insuranceDiscount;
+
+
+            boolean discountByAge = patient.getAge() > 50;
+            if (discountByAge){
+                double newDiscount = ((double) 10 / 100) * totalToPay;
+                totalToPay = totalToPay - newDiscount;
+            }
+
+            exams.setQuantity(exams.getQuantity() - quantityToBuy);
+            patient.setInsuranceAmount(patient.getInsuranceAmount() - totalToPay);
+
+            ExamTicket ticket = ExamTicket.builder()
+                    .patientId(request.patientId())
+                    .patientName(patient.getName())
+                    .examId(exams.getId())
+                    .examName(exams.getExamName())
+                    .examPrice(exams.getPrice())
+                    .quantity(quantityToBuy)
+                    .insuranceName(insurance.getInsuranceName())
+                    .totalSale(totalToPay)
+                    .build();
+
         }
-        return "Purchase Successfull";
+        return "Purchase Successful";
     }
 }

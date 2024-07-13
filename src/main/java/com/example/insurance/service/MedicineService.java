@@ -42,9 +42,7 @@ public class MedicineService {
     }
 
     public Medicine getMedicineById (Integer id){
-        Optional<Medicine> foundMedicine = medicineRepository.findById(id);
-        if (foundMedicine.isEmpty()) throw new RuntimeException();
-        return foundMedicine.get();
+        return medicineRepository.findById(id).get();
     }
 
     public List<Medicine> getAllMedicines (){

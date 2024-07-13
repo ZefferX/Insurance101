@@ -23,8 +23,8 @@ public class ExamTicket {
             generator = "exams_id_sequence")
 
     private Integer Id;
-    private Integer clientId;
-    private String clientName;
+    private Integer patientId;
+    private String patientName;
     private Integer examId;
     private String examName;
     private Double examPrice;
