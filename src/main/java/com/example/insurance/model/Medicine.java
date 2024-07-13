@@ -22,6 +22,6 @@ public class Medicine {
     private Integer Id;
     private String medicineName;
     private Integer quantity;
-    private Integer price;
+    private Double price;
 }
 

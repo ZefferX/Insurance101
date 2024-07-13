@@ -53,9 +53,9 @@ public class PatientService {
         return patientRepository.save(foundPatient);
     }
 
-    public Patient updatePatientToInternalUse(Patient patient)
+    public void updatePatientToInternalUse(Patient patient)
     {
-        return patientRepository.save(patient);
+            patientRepository.save(patient);
 
     }
 }

@@ -22,7 +22,7 @@ public class Insurance {
 
         private Integer Id;
         private String insuranceName;
-        private Integer insuranceAmount;
+        private Double insuranceAmount;
         private Integer examsDiscount;
         private Integer medicinesDiscount;
     }

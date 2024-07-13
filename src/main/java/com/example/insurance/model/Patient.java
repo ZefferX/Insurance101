@@ -23,7 +23,7 @@ public class Patient {
 
     private String name;
     private Integer age;
-    private Integer insuranceAmount;
+    private Double insuranceAmount;
 
     @ManyToOne
     @JoinColumn(name = "insurance_id", nullable = false)

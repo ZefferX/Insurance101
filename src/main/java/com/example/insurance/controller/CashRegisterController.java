@@ -18,7 +18,7 @@ public class CashRegisterController {
         return cashRegisterService.getCashRegisterByLastId();
     }
 
-    @PostMapping public String addMoneyToCashRegister(@RequestBody Integer money){
+    @PostMapping public String addMoneyToCashRegister(@RequestBody Double money){
         return cashRegisterService.addMoneyToCashRegister(money);
     }
 

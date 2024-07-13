@@ -2,15 +2,16 @@ package com.example.insurance.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class Exams {
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class MedicineTicket {
     @Id
     @SequenceGenerator(
             name = "exams_id_sequence",
@@ -21,8 +22,12 @@ public class Exams {
             generator = "exams_id_sequence")
 
     private Integer Id;
-    private String examName;
+    private Integer patientId;
+    private String patientName;
+    private Integer medicineId;
+    private String medicineName;
+    private Double medicinePrice;
     private Integer quantity;
-    private Double price;
-
+    private String insuranceName;
+    private Double totalSale;
 }

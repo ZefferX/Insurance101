@@ -2,7 +2,7 @@ package com.example.insurance.dto;
 
 public record NewExamRequest(
         String name,
-        Integer price,
+        Double price,
         Integer quantity
 ) {
 

@@ -21,5 +21,5 @@ public class CashRegister {
             generator = "cashRegister_id_sequence")
     private Integer id;
 
-    private Integer total;
+    private Double total;
 }

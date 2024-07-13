@@ -26,9 +26,9 @@ public class CashRegisterService {
     }
     Este por alguna razon no funciono, seguramente tiene algo mal*/
 
-    public String addMoneyToCashRegister(Integer money){
-        Integer currentMoney = getCashRegisterByLastId().getTotal();
-        Integer newTotal = currentMoney + money;
+    public String addMoneyToCashRegister(Double money){
+        Double currentMoney = getCashRegisterByLastId().getTotal();
+        Double newTotal = currentMoney + money;
         CashRegister cashRegister = new CashRegister();
         cashRegister.setTotal(newTotal);
 
@@ -43,8 +43,8 @@ public class CashRegisterService {
         Optional<CashRegister> foundCashRegisterEntry = cashRegisterRepository.findById(id);
         if (foundCashRegisterEntry.isEmpty()) throw new RuntimeException();
         CashRegister newCashRegister = foundCashRegisterEntry.get();
-        Integer lastCashEntry = cashRegisterRepository.findFirstByOrderByIdDesc().getTotal();
-        Integer newCashRegisterTotal = lastCashEntry - newCashRegister.getTotal();
+        Double lastCashEntry = cashRegisterRepository.findFirstByOrderByIdDesc().getTotal();
+        Double newCashRegisterTotal = lastCashEntry - newCashRegister.getTotal();
         newCashRegister.setTotal(newCashRegisterTotal);
         cashRegisterRepository.deleteById(id);
         return cashRegisterRepository.save(newCashRegister);
