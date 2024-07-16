@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/insurance")
+
 public class InsuranceController {
     private final InsuranceService insuranceService;
 
