@@ -25,6 +25,8 @@ public class PatientService {
         return foundPatient;
     }
 
+
+
     public void addPacient (NewPatientRequest request){
         Insurance insurance = insuranceService.findInsuranceById(request.insuranceId());
         Patient newPatient = new Patient();
