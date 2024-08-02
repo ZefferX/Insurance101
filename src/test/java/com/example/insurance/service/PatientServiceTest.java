@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -116,11 +118,50 @@ class PatientServiceTest {
     }
 
     @Test
-    void deletePacient() {
+    void shouldThrowExceptionOnAddPacient() {
+        //given
+        NewPatientRequest newPatientRequest = new NewPatientRequest("Carlos", 23, 1);
+        Insurance insurance = mock(Insurance.class);
+        //when
+        when(insuranceService.findInsuranceById(1)).thenReturn(insurance);
+        doThrow(RuntimeException.class).when(patientRepository).save(Mockito.any(Patient.class));
+        //then
+        assertThrows(RuntimeException.class, ()-> serviceUnderTest.addPacient(newPatientRequest));
+        verify(patientRepository, atMostOnce()).save(Mockito.any(Patient.class));
+
+
     }
 
     @Test
-    void updatePacient() {
+    void ShouldDeletePacientHappyCase() {
+        //given
+        Integer patientToDelete = 1;
+        Patient patient = mock(Patient.class);
+        //when
+        when(patientRepository.findById(patientToDelete)).thenReturn(Optional.ofNullable(patient));
+        String deletedPatient = serviceUnderTest.deletePacient(patientToDelete);
+        //then
+        assertThat(deletedPatient).isEqualTo("Patient deleted successfully");
+
+    }
+
+    @Test
+    void ShouldThrowExceptionOnDeletePacient() {
+        //given
+        Integer patientToDelete = 1;
+
+        //when
+        when(patientRepository.findById(patientToDelete)).thenReturn(Optional.empty());
+        //then
+        String result = serviceUnderTest.deletePacient(patientToDelete);
+        assertEquals("Patient with id " + patientToDelete + " not found", result);
+        verify(patientRepository, never()).deleteById(patientToDelete);
+    }
+
+    @Test
+    void shouldUpdatePacientHappyCase() {
+
+
     }
 
     @Test
