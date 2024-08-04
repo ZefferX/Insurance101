@@ -25,7 +25,7 @@ public class MedicineController {
     @GetMapping public List<Medicine> getAllMedicines(){
         return medicineService.getAllMedicines();
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping public void createMedicine(@RequestBody NewMedicineRequest request){
         medicineService.addMedicine(request);
     }
