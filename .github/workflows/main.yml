@@ -1,0 +1,27 @@
+name: Stats
+
+on: 
+  push:
+    branches: [ ci_cd ]
+
+jobs: 
+  build: 
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Checkout repo 
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' 
+          java-version: '21'
+
+      - name: Clean and build
+        run: mvn clean test package
+        
+      - name: Run Script
+        run: java -jar .\target\insurance-0.0.1-SNAPSHOT.jar
+
+      
